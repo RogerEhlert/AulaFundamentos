@@ -1,0 +1,124 @@
+import java.util.Scanner;
+import java.util.Random;
+
+// Trabalho final | Roger Rozales Ehlert
+public class TrabalhoFinal 
+{
+    public static void main(String[] args) 
+    {
+        Scanner LER = new Scanner(System.in);
+        Random aleatorio = new Random();
+
+        System.out.print("Escreva a quantidade de linhas: ");
+        int linhas = LER.nextInt();
+
+        System.out.print("Escreva a quantidade de colunas: ");
+        int colunas = LER.nextInt();
+
+        char[][] matriz = new char[linhas][colunas];
+
+        for (int i = 0; i < linhas; i++) 
+        {
+            for (int j = 0; j < colunas; j++) 
+            {
+                matriz[i][j] = '.';
+            }
+        }
+
+        int linhaA, colunaA;
+        int linhaB, colunaB;
+        int linhaC, colunaC;
+        int linhaD, colunaD;
+
+        linhaA = aleatorio.nextInt(linhas);
+        colunaA = aleatorio.nextInt(colunas);
+
+        do 
+        {
+            linhaB = aleatorio.nextInt(linhas);
+            colunaB = aleatorio.nextInt(colunas);
+        } 
+        while (linhaB == linhaA && colunaB == colunaA);
+
+        do 
+        {
+            linhaC = aleatorio.nextInt(linhas);
+            colunaC = aleatorio.nextInt(colunas);
+        } 
+        while ((linhaC == linhaA && colunaC == colunaA) ||
+                 (linhaC == linhaB && colunaC == colunaB));
+
+        do 
+        {
+            linhaD = aleatorio.nextInt(linhas);
+            colunaD = aleatorio.nextInt(colunas);
+        } 
+        while ((linhaD == linhaA && colunaD == colunaA) ||
+                 (linhaD == linhaB && colunaD == colunaB) ||
+                 (linhaD == linhaC && colunaD == colunaC));
+
+        System.out.println("Sorteando os pontos...");
+        System.out.println("::: PontoA: L=" + linhaA + ", C=" + colunaA);
+        System.out.println("::: PontoB: L=" + linhaB + ", C=" + colunaB);
+        System.out.println("::: PontoC: L=" + linhaC + ", C=" + colunaC);
+        System.out.println("::: PontoD: L=" + linhaD + ", C=" + colunaD);
+        System.out.println("::: >>> Nenhum ponto com coordenadas repetidas! <<<");
+
+        ligarPontos(matriz, linhaA, colunaA, linhaB, colunaB, '+');
+        ligarPontos(matriz, linhaC, colunaC, linhaD, colunaD, '*');
+
+        matriz[linhaA][colunaA] = 'A';
+        matriz[linhaB][colunaB] = 'B';
+        matriz[linhaC][colunaC] = 'C';
+        matriz[linhaD][colunaD] = 'D';
+
+        for (int i = 0; i < linhas; i++) 
+        {
+            for (int j = 0; j < colunas; j++) 
+            {
+                System.out.print(matriz[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        LER.close();
+    }
+
+    public static void ligarPontos(char[][] matriz, int linha1, int coluna1, int linha2, int coluna2, char simbolo) {
+        int linhaAtual = linha1;
+        int colunaAtual = coluna1;
+
+        while (linhaAtual != linha2) 
+        {
+            if (matriz[linhaAtual][colunaAtual] == '.') 
+            {
+                matriz[linhaAtual][colunaAtual] = simbolo;
+            }
+
+            if (linhaAtual < linha2) 
+            {
+                linhaAtual++;
+            } 
+            else if (linhaAtual > linha2) 
+            {
+                linhaAtual--;
+            }
+        }
+
+        while (colunaAtual != coluna2) {
+            if (matriz[linhaAtual][colunaAtual] == '.') 
+            {
+                matriz[linhaAtual][colunaAtual] = simbolo;
+            }
+
+            if (colunaAtual < coluna2) 
+            {
+                colunaAtual++;
+            } 
+            else if (colunaAtual > coluna2) 
+            {
+                colunaAtual--;
+            }
+        }
+    }
+}
